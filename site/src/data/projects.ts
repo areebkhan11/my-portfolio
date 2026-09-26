@@ -35,9 +35,11 @@ export interface Project {
   highlights: string[];
   stack: string[];
   featured: boolean;
+  /** Temporarily hide from the site without deleting the project data. */
+  hidden?: boolean;
 }
 
-export const projects: Project[] = [
+const allProjects: Project[] = [
   {
     slug: "synko",
     title: "Synko",
@@ -158,6 +160,7 @@ export const projects: Project[] = [
     ],
     stack: ["Next.js", "Node.js", "Python", "LLM integrations", "Vector database", "AWS"],
     featured: false,
+    hidden: true,
   },
   {
     slug: "reskue",
@@ -256,6 +259,8 @@ export const projects: Project[] = [
     featured: false,
   },
 ];
+
+export const projects: Project[] = allProjects.filter((project) => !project.hidden);
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
